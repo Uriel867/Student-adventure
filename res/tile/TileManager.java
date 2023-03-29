@@ -84,7 +84,7 @@ public class TileManager {
             //world is the position on the map and screen is where we draw it
             int worldX = worldCol * gp.TILE_SIZE;
             int worldY = worldRow * gp.TILE_SIZE;
-            int screenX = worldX = worldX - gp.player.worldX + gp.player.screenX;
+            int screenX = worldX  - gp.player.worldX + gp.player.screenX;
             int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
             // create a boundary so that we only draw tiles that are in the current visible boundary
@@ -94,7 +94,7 @@ public class TileManager {
                     worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY) {
                 g2.drawImage(tile[tileNum].image, screenX, screenY, gp.TILE_SIZE, gp.TILE_SIZE, null);
             }
-            g2.drawImage(tile[tileNum].image, screenX, screenY, gp.TILE_SIZE, gp.TILE_SIZE, null);
+//            g2.drawImage(tile[tileNum].image, screenX, screenY, gp.TILE_SIZE, gp.TILE_SIZE, null);
             worldCol++;
 
 
