@@ -4,15 +4,15 @@ import javax.imageio.ImageIO;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-public class DoorObject extends SuperObject {
-    public DoorObject(){
-        name = "Door";
+public class BootsObject extends SuperObject{
+    public BootsObject(){
+        name = "Boots";
         try{
-            image = ImageIO.read(new FileInputStream("res/objects/door.png"));
+            image = ImageIO.read(new FileInputStream("res/objects/boots.png"));
         }
         catch(IOException e){
             e.printStackTrace();
         }
-        collision = true;
+
     }
 }

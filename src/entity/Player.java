@@ -15,6 +15,7 @@ public class Player extends Entity {
 
     public final int screenX;
     public final int screenY;
+    public int hasKey = 0;
 
 
     public Player(GamePanel gp, KeyHandler keyH) {
@@ -24,7 +25,9 @@ public class Player extends Entity {
         screenX = gp.SCREEN_WIDTH / 2 - (gp.TILE_SIZE / 2);
         screenY = gp.SCREEN_HEIGHT / 2 - (gp.TILE_SIZE / 2);
 
-        solidArea = new Rectangle(8, 16, 32, 32);
+        solidArea = new Rectangle(7, 15, 32, 32);
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
 
         setDefaultValues();
         getPlayerImage();
@@ -71,6 +74,10 @@ public class Player extends Entity {
             collisionOn = false;
             gp.detector.checkTile(this);
 
+            // check object collision
+            int objIndex = gp.detector.checkObject(this, true);
+            pickUpObject(objIndex);
+
             //if collision is false so the player can move
             if (collisionOn == false) {
                 switch (direction) {
@@ -95,6 +102,35 @@ public class Player extends Entity {
                 else if (spriteNum == 2)
                     spriteNum = 1;
                 spriteCounter = 0;
+            }
+        }
+    }
+
+    public void pickUpObject(int i){
+        // if different than 999 we touched an object and can pick it up
+        if(i != 999){
+            String objectName = gp.obj[i].name;
+            switch(objectName){
+                case "Key":
+                    gp.playSE(1);
+                    hasKey++;
+                    gp.obj[i] = null;
+                    gp.ui.showMessage("Found a key!");
+                    break;
+                case "Door":
+                    if(hasKey > 0){
+                        gp.obj[i] = null;
+                        hasKey--;
+                    }
+                    else{
+                        gp.ui.showMessage("Missing key");
+                    }
+                    break;
+                case "Boots":
+                    speed += 2;
+                    gp.obj[i] = null;
+                    gp.ui.showMessage("Speed Boost bro!");
+                    break;
             }
         }
     }
